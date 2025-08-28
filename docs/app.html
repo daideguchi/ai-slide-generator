@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Slide Generator - Web App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .input-panel {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .output-panel {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input[type="text"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 200px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .file-input-wrapper:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+        }
+        
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: -9999px;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            width: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .theme-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .theme-option {
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-option:hover {
+            border-color: #667eea;
+        }
+        
+        .theme-option.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .theme-option h4 {
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .theme-option p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .preview-frame {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+        
+        .status-indicator {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status-processing {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 0.5rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 AI Slide Generator</h1>
+            <p>ブラウザで直接使える高速スライド生成システム</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="input-panel">
+                <h2 class="section-title">📝 コンテンツ入力</h2>
+                
+                <div class="form-group">
+                    <label for="presentationTitle">プレゼンテーションタイトル</label>
+                    <input type="text" id="presentationTitle" placeholder="例: 新商品発表会" value="AI技術の最新動向">
+                </div>
+                
+                <div class="form-group">
+                    <label for="textContent">テキストコンテンツ</label>
+                    <textarea id="textContent" placeholder="スライドにしたい内容を入力してください...
+
+例:
+# はじめに
+- AI技術は急速に進歩している
+- ビジネスへの影響が拡大
+
+# 現在の状況
+- ChatGPTの普及
+- 企業での導入事例増加
+- 新しいサービスの登場">
+# はじめに
+- AI技術は急速に進歩している
+- ビジネスへの影響が拡大している
+- 新しい可能性を探る必要がある
+
+# 現在の状況
+- ChatGPTなどの対話AI普及
+- 企業での導入事例が急増
+- 新しいサービスが次々と登場
+
+# 技術的な特徴
+- 大規模言語モデル（LLM）
+- 自然言語処理の向上
+- マルチモーダル対応
+
+# ビジネス活用事例
+- カスタマーサービス自動化
+- コンテンツ作成支援
+- データ分析と洞察抽出
+
+# 今後の展望
+- さらなる技術革新
+- 産業全体への影響拡大
+- 新しい働き方の創出</textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>📁 ファイルアップロード（オプション）</label>
+                    <div class="file-input-wrapper" id="fileInputWrapper">
+                        <input type="file" id="fileInput" accept=".txt,.md" multiple>
+                        <div>
+                            <span>📎 ファイルをドラッグ&ドロップ</span><br>
+                            <small>または、クリックして選択（.txt, .md)</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="section-title">🎨 テーマ選択</h3>
+                <div class="theme-selector">
+                    <div class="theme-option active" data-theme="google_classic">
+                        <h4>🔵 Classic</h4>
+                        <p>標準的なGoogle風デザイン</p>
+                    </div>
+                    <div class="theme-option" data-theme="google_dark">
+                        <h4>🔴 Dark</h4>
+                        <p>プロフェッショナルダークテーマ</p>
+                    </div>
+                    <div class="theme-option" data-theme="google_minimal">
+                        <h4>⚪ Minimal</h4>
+                        <p>ミニマルデザイン</p>
+                    </div>
+                </div>
+                
+                <button class="btn" id="generateBtn">
+                    🚀 スライド生成
+                </button>
+            </div>
+            
+            <div class="output-panel">
+                <h2 class="section-title">👀 プレビュー</h2>
+                
+                <div id="statusIndicator" class="status-indicator" style="display: none;">
+                    ステータス
+                </div>
+                
+                <iframe id="previewFrame" class="preview-frame" src="about:blank"></iframe>
+                
+                <div style="margin-top: 1rem;">
+                    <button class="btn" id="downloadBtn" disabled>
+                        💾 HTMLをダウンロード
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Global variables
+        let currentTheme = 'google_classic';
+        let generatedHtml = null;
+        
+        // DOM elements
+        const textContent = document.getElementById('textContent');
+        const presentationTitle = document.getElementById('presentationTitle');
+        const fileInput = document.getElementById('fileInput');
+        const fileInputWrapper = document.getElementById('fileInputWrapper');
+        const generateBtn = document.getElementById('generateBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const previewFrame = document.getElementById('previewFrame');
+        const statusIndicator = document.getElementById('statusIndicator');
+        const themeOptions = document.querySelectorAll('.theme-option');
+        
+        // Theme selection
+        themeOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                themeOptions.forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+                currentTheme = option.dataset.theme;
+                
+                // Re-generate if content exists
+                if (generatedHtml) {
+                    generateSlides();
+                }
+            });
+        });
+        
+        // File input handling
+        fileInputWrapper.addEventListener('click', () => fileInput.click());
+        fileInputWrapper.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            fileInputWrapper.style.background = '#e9ecef';
+        });
+        fileInputWrapper.addEventListener('dragleave', () => {
+            fileInputWrapper.style.background = '#f8f9fa';
+        });
+        fileInputWrapper.addEventListener('drop', (e) => {
+            e.preventDefault();
+            fileInputWrapper.style.background = '#f8f9fa';
+            fileInput.files = e.dataTransfer.files;
+            handleFileInput();
+        });
+        
+        fileInput.addEventListener('change', handleFileInput);
+        
+        function handleFileInput() {
+            const files = fileInput.files;
+            if (files.length > 0) {
+                const file = files[0];
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    textContent.value = e.target.result;
+                };
+                reader.readAsText(file);
+            }
+        }
+        
+        // Generate slides
+        generateBtn.addEventListener('click', generateSlides);
+        
+        function generateSlides() {
+            const title = presentationTitle.value || 'AI Generated Presentation';
+            const content = textContent.value.trim();
+            
+            if (!content) {
+                showStatus('error', 'テキストコンテンツを入力してください');
+                return;
+            }
+            
+            showStatus('processing', 'スライドを生成中...');
+            generateBtn.disabled = true;
+            
+            // Simulate processing time
+            setTimeout(() => {
+                try {
+                    const slides = parseTextToSlides(content);
+                    generatedHtml = generateHtmlPresentation(title, slides, currentTheme);
+                    
+                    // Update preview
+                    const blob = new Blob([generatedHtml], { type: 'text/html' });
+                    const url = URL.createObjectURL(blob);
+                    previewFrame.src = url;
+                    
+                    showStatus('success', `${slides.length}枚のスライドを生成しました`);
+                    downloadBtn.disabled = false;
+                    generateBtn.disabled = false;
+                } catch (error) {
+                    showStatus('error', 'スライド生成中にエラーが発生しました');
+                    generateBtn.disabled = false;
+                }
+            }, 1500);
+        }
+        
+        // Download functionality
+        downloadBtn.addEventListener('click', () => {
+            if (generatedHtml) {
+                const blob = new Blob([generatedHtml], { type: 'text/html' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${presentationTitle.value || 'presentation'}.html`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        });
+        
+        function showStatus(type, message) {
+            statusIndicator.style.display = 'block';
+            statusIndicator.className = `status-indicator status-${type}`;
+            
+            if (type === 'processing') {
+                statusIndicator.innerHTML = `<span class="loading-spinner"></span>${message}`;
+            } else {
+                statusIndicator.textContent = message;
+            }
+        }
+        
+        function parseTextToSlides(text) {
+            const lines = text.split('\n').map(line => line.trim()).filter(line => line);
+            const slides = [];
+            let currentSlide = null;
+            
+            for (const line of lines) {
+                if (line.startsWith('# ')) {
+                    // New slide with title
+                    if (currentSlide) slides.push(currentSlide);
+                    currentSlide = {
+                        title: line.substring(2).trim(),
+                        content: [],
+                        type: 'content'
+                    };
+                } else if (line.startsWith('- ') || line.startsWith('* ')) {
+                    // Bullet point
+                    if (currentSlide) {
+                        currentSlide.content.push(line.substring(2).trim());
+                    }
+                } else if (line.length > 0) {
+                    // Regular content
+                    if (!currentSlide) {
+                        currentSlide = {
+                            title: 'スライド',
+                            content: [],
+                            type: 'content'
+                        };
+                    }
+                    currentSlide.content.push(line);
+                }
+            }
+            
+            if (currentSlide) slides.push(currentSlide);
+            
+            // If no slides were created, create a default one
+            if (slides.length === 0) {
+                slides.push({
+                    title: 'コンテンツ',
+                    content: [text],
+                    type: 'content'
+                });
+            }
+            
+            return slides;
+        }
+        
+        function generateHtmlPresentation(title, slides, theme) {
+            const themeCSS = getThemeCSS(theme);
+            const slidesHtml = slides.map((slide, index) => 
+                `<section ${index === 0 ? 'class="title-slide"' : ''}>
+                    <h${index === 0 ? '1' : '2'}>${slide.title}</h${index === 0 ? '1' : '2'}>
+                    ${slide.content.length > 0 ? `
+                        <ul>
+                            ${slide.content.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    ` : ''}
+                </section>`
+            ).join('\n');
+            
+            return `<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>${title}</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <style>
+        ${themeCSS}
+        
+        /* AI Enhanced Patterns Styles */
+        .google-bold {
+            font-weight: 700;
+            color: var(--google-primary-blue);
+        }
+        
+        .speaker-notes-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 10px 15px;
+            background: rgba(66, 133, 244, 0.9);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .speaker-notes-button:hover {
+            background: rgba(66, 133, 244, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            ${slidesHtml}
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            controls: true,
+            progress: true,
+            center: true,
+            transition: 'slide',
+            keyboard: true,
+            overview: true,
+            slideNumber: "c/t",
+            showSlideNumber: "all",
+            fragments: true,
+            fragmentInURL: true,
+            viewDistance: 3,
+            mobileViewDistance: 2
+        });
+    </script>
+</body>
+</html>`;
+        }
+        
+        function getThemeCSS(theme) {
+            const themes = {
+                google_classic: `
+                /* Google Classic Theme - AI Design */
+                .reveal {
+                    font-family: 'Google Sans', Arial, sans-serif;
+                    color: #333333;
+                    background: #FFFFFF;
+                }
+                
+                .reveal .slides section {
+                    text-align: left;
+                    padding: 40px 60px;
+                    background: #FFFFFF;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    margin: 20px;
+                }
+                
+                .reveal .slides section.title-slide {
+                    text-align: center;
+                    background: linear-gradient(135deg, #4285F4 0%, #4285F4 100%);
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+                
+                .reveal .slides section.title-slide h1 {
+                    font-size: 3em;
+                    font-weight: 400;
+                    margin-bottom: 0.5em;
+                }
+                
+                .reveal h1, .reveal h2, .reveal h3 {
+                    color: #333333;
+                    font-weight: 500;
+                }
+                
+                .reveal .slides section.title-slide h1 {
+                    color: white;
+                }
+                
+                .reveal ul {
+                    margin: 1em 0;
+                }
+                
+                .reveal li {
+                    margin-bottom: 0.5em;
+                    line-height: 1.6;
+                }`,
+                
+                google_dark: `
+                /* Google Dark Theme - AI Design */
+                .reveal {
+                    font-family: 'Google Sans', Arial, sans-serif;
+                    color: #FFFFFF;
+                    background: #1F1F1F;
+                }
+                
+                .reveal .slides section {
+                    text-align: left;
+                    padding: 40px 60px;
+                    background: #2D2D2D;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+                    margin: 20px;
+                    border: 1px solid #404040;
+                }
+                
+                .reveal .slides section.title-slide {
+                    text-align: center;
+                    background: linear-gradient(135deg, #4285F4 0%, #1976D2 100%);
+                    color: white;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+                
+                .reveal .slides section.title-slide h1 {
+                    font-size: 3em;
+                    font-weight: 400;
+                    margin-bottom: 0.5em;
+                }
+                
+                .reveal h1, .reveal h2, .reveal h3 {
+                    color: #FFFFFF;
+                    font-weight: 500;
+                }
+                
+                .reveal ul {
+                    margin: 1em 0;
+                }
+                
+                .reveal li {
+                    margin-bottom: 0.5em;
+                    line-height: 1.6;
+                    color: #E0E0E0;
+                }`,
+                
+                google_minimal: `
+                /* Google Minimal Theme - AI Design */
+                .reveal {
+                    font-family: 'Google Sans', Arial, sans-serif;
+                    color: #333333;
+                    background: #FAFAFA;
+                }
+                
+                .reveal .slides section {
+                    text-align: left;
+                    padding: 60px 80px;
+                    background: #FFFFFF;
+                    border-radius: 0;
+                    box-shadow: none;
+                    margin: 0;
+                    border: none;
+                }
+                
+                .reveal .slides section.title-slide {
+                    text-align: center;
+                    background: #FFFFFF;
+                    color: #333333;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+                
+                .reveal .slides section.title-slide h1 {
+                    font-size: 3em;
+                    font-weight: 300;
+                    margin-bottom: 0.5em;
+                    color: #4285F4;
+                }
+                
+                .reveal h1, .reveal h2, .reveal h3 {
+                    color: #333333;
+                    font-weight: 400;
+                }
+                
+                .reveal h2 {
+                    color: #4285F4;
+                    border-bottom: 2px solid #E8EAED;
+                    padding-bottom: 10px;
+                }
+                
+                .reveal ul {
+                    margin: 1em 0;
+                }
+                
+                .reveal li {
+                    margin-bottom: 0.8em;
+                    line-height: 1.8;
+                    color: #5F6368;
+                }`
+            };
+            
+            return themes[theme] || themes.google_classic;
+        }
+        
+        // Auto-generate on page load if content exists
+        window.addEventListener('load', () => {
+            if (textContent.value.trim()) {
+                setTimeout(generateSlides, 500);
+            }
+        });
+    </script>
+</body>
+</html>

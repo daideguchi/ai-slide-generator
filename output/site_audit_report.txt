@@ -1,0 +1,62 @@
+AI Slide Generator - Site Audit Summary
+==================================================
+File: index.html (9763 bytes)
+- Title: OK -> AI Slide Generator - まじん式プロンプト設計統合
+- Lang: ja
+- Viewport: OK
+- Meta description: MISSING
+- Media queries: YES
+- External CSS/JS: 0/0
+- Preconnects: 0
+- Fonts: 0
+- Broken local links: 0
+- CDN CSS/JS missing SRI: 0/0
+-
+File: demo-google-classic.html (44686 bytes)
+- Title: OK -> AI Slide Generator - Google Classic Demo
+- Lang: ja
+- Viewport: OK
+- Meta description: MISSING
+- Media queries: YES
+- External CSS/JS: 3/4
+- Preconnects: 2
+- Fonts: 3
+- Broken local links: 0
+- CDN CSS/JS missing SRI: 3/4
+- Reveal.initialize: YES
+- Speaker notes button: YES
+- Patterns: cards, content, diagram, process, timeline
+- Zoom disabled: YES
+-
+File: demo-google-dark.html (44683 bytes)
+- Title: OK -> AI Slide Generator - Google Dark Demo
+- Lang: ja
+- Viewport: OK
+- Meta description: MISSING
+- Media queries: YES
+- External CSS/JS: 3/4
+- Preconnects: 2
+- Fonts: 3
+- Broken local links: 0
+- CDN CSS/JS missing SRI: 3/4
+- Reveal.initialize: YES
+- Speaker notes button: YES
+- Patterns: cards, content, diagram, process, timeline
+- Zoom disabled: YES
+-
+File: demo-google-minimal.html (44569 bytes)
+- Title: OK -> AI Slide Generator - Google Minimal Demo
+- Lang: ja
+- Viewport: OK
+- Meta description: MISSING
+- Media queries: YES
+- External CSS/JS: 3/4
+- Preconnects: 2
+- Fonts: 3
+- Broken local links: 0
+- CDN CSS/JS missing SRI: 3/4
+- Reveal.initialize: YES
+- Speaker notes button: YES
+- Patterns: cards, content, diagram, process, timeline
+- Zoom disabled: YES
+-

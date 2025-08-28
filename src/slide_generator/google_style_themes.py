@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Google Style Themes - まじん式デザインシステム統合
+Google Style Themes - AI Design System Integration
 Google風デザインテーマとCSS生成システム
 """
 
@@ -51,7 +51,7 @@ class GoogleStyleConfig:
     box_shadow: str = "0 2px 8px rgba(0,0,0,0.1)"
 
 class GoogleStyleThemes:
-    """まじん式Google風テーマ集"""
+    """AI Google風テーマ集"""
     
     @staticmethod
     def get_google_classic_theme() -> Dict[str, Any]:
@@ -62,7 +62,7 @@ class GoogleStyleThemes:
             "name": "Google Classic",
             "description": "標準的なGoogle風デザイン",
             "css": f"""
-                /* Google Classic Theme - まじん式デザイン */
+                /* Google Classic Theme - AI Design */
                 .reveal {{
                     font-family: {config.font_family};
                     color: {config.text_color};

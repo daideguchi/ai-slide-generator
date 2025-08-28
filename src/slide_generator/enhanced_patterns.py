@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enhanced Slide Patterns - まじん式プロンプト設計統合
+Enhanced Slide Patterns - AI Prompt Design Integration
 Googleスライド自動生成のための高度なパターンシステム
 """
 
@@ -10,7 +10,7 @@ from enum import Enum
 import re
 
 class SlidePattern(Enum):
-    """スライドの表現パターン（まじん式8パターン準拠）"""
+    """スライドの表現パターン（AI8パターン準拠）"""
     TITLE = "title"           # 表紙
     SECTION = "section"       # 章扉  
     CONTENT = "content"       # 1～2カラム箇条書き＋小見出し
@@ -25,7 +25,7 @@ class SlidePattern(Enum):
 
 @dataclass
 class EnhancedSlideStructure:
-    """まじん式設計思想に基づく拡張スライド構造"""
+    """AI設計思想に基づく拡張スライド構造"""
     pattern: SlidePattern
     title: str
     subhead: Optional[str] = None
@@ -47,7 +47,7 @@ class EnhancedSlideStructure:
     images: List[str] = field(default_factory=list)
 
 class InlineStyleParser:
-    """インライン強調記法パーサー（まじん式仕様）"""
+    """インライン強調記法パーサー（AIパターン仕様）"""
     
     @staticmethod
     def parse_styled_text(text: str) -> Dict[str, Any]:
@@ -103,13 +103,13 @@ class InlineStyleParser:
         }
 
 class PatternSelector:
-    """コンテンツに最適なパターンを選定するAI（まじん式戦略設計）"""
+    """コンテンツに最適なパターンを選定するAI（AI戦略設計）"""
     
     @staticmethod
     def select_optimal_pattern(title: str, content: List[str], context: str = "") -> SlidePattern:
         """
         タイトルとコンテンツから最適なパターンを選定
-        まじん式: AIを戦略コンサルとして活用
+        AI: AIを戦略コンサルとして活用
         """
         title_lower = title.lower()
         content_text = " ".join(content).lower() if content else ""
@@ -163,13 +163,13 @@ class PatternSelector:
         return SlidePattern.CONTENT
 
 class SpeakerNotesGenerator:
-    """スピーカーノート自動生成（まじん式発表原稿システム）"""
+    """スピーカーノート自動生成（AI発表原稿システム）"""
     
     @staticmethod
     def generate_speaker_notes(slide: EnhancedSlideStructure) -> str:
         """
         スライド内容に基づいて発表原稿を生成
-        まじん式: プレーンテキストで要点を簡潔に
+        AI: プレーンテキストで要点を簡潔に
         """
         notes_parts = []
         
@@ -230,13 +230,13 @@ class SpeakerNotesGenerator:
         return " ".join(notes_parts)
 
 class SlideStructureValidator:
-    """スライド構造の自己検証システム（まじん式品質保証）"""
+    """スライド構造の自己検証システム（AI品質保証）"""
     
     @staticmethod
     def validate_slide_structure(slides: List[EnhancedSlideStructure]) -> Dict[str, Any]:
         """
         スライド構造の妥当性を検証
-        まじん式: 自己検証機能で信頼性UP
+        AI: 自己検証機能で信頼性UP
         """
         validation_result = {
             "is_valid": True,
@@ -296,7 +296,7 @@ class SlideStructureValidator:
         return validation_result
 
 class EnhancedSlideGenerator:
-    """まじん式設計思想統合スライドジェネレーター"""
+    """AI設計思想統合スライドジェネレーター"""
     
     def __init__(self):
         self.pattern_selector = PatternSelector()
@@ -306,7 +306,7 @@ class EnhancedSlideGenerator:
     def enhance_slide_structure(self, basic_slides) -> List[EnhancedSlideStructure]:
         """
         基本スライド構造を拡張スライド構造に変換
-        まじん式: 戦略設計者としてのAI活用
+        AI: 戦略設計者としてのAI活用
         """
         enhanced_slides = []
         
@@ -367,7 +367,7 @@ class EnhancedSlideGenerator:
 
 if __name__ == "__main__":
     # テスト用サンプル
-    print("Enhanced Slide Patterns - まじん式プロンプト設計統合")
+    print("Enhanced Slide Patterns - AI Prompt Design Integration")
     print("=" * 50)
     
     # インライン記法テスト

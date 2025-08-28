@@ -275,10 +275,10 @@ def analyze(input_file: str):
               help='Show slide structure validation results')
 def enhanced(input_file: str, title: str, theme: str, output: str, language: str, 
             open_browser: bool, show_validation: bool):
-    """Generate enhanced HTML presentation with まじん式 patterns and Google themes"""
+    """Generate enhanced HTML presentation with AI patterns and Google themes"""
     
     print_info(f"🚀 Generating enhanced presentation from {input_file}")
-    print_info(f"✨ Using まじん式 pattern design methodology")
+    print_info(f"✨ Using AI pattern design methodology")
     
     try:
         # Parse text file
@@ -305,7 +305,7 @@ def enhanced(input_file: str, title: str, theme: str, output: str, language: str
         print_info(f"📏 File size: {result['file_size']:,} bytes")
         
         # Show pattern distribution
-        print_info("🔍 まじん式 Pattern Distribution:")
+        print_info("🔍 AI Pattern Distribution:")
         pattern_dist = result['pattern_distribution']
         for pattern, count in pattern_dist.items():
             print_info(f"  • {pattern}: {count} slides")
@@ -399,7 +399,7 @@ def templates():
     for key, name in HTML_THEMES.items():
         print(f"  {key:12} → {name}")
     
-    print(f"\n{Fore.MAGENTA}✨ Enhanced Google Material Themes (まじん式):{Style.RESET_ALL}")
+    print(f"\n{Fore.MAGENTA}✨ Enhanced Google Material Themes (AI Pattern):{Style.RESET_ALL}")
     google_themes = {
         "google_classic": "Google Classic - Clean blue and white design",
         "google_dark": "Google Dark - Professional dark theme", 

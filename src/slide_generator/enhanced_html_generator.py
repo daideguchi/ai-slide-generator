@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enhanced HTML Slides Generator - まじん式プロンプト設計統合
+Enhanced HTML Slides Generator - AI Prompt Design Integration
 Google Material Design + 8パターン + スピーカーノート対応
 """
 
@@ -17,7 +17,7 @@ from .google_style_themes import GoogleStyleThemes, GoogleColors
 
 
 class EnhancedHTMLSlidesGenerator:
-    """まじん式設計統合HTMLスライドジェネレーター"""
+    """AI Design Integration HTML Slide Generator"""
     
     def __init__(self):
         self.enhanced_generator = EnhancedSlideGenerator()
@@ -28,7 +28,7 @@ class EnhancedHTMLSlidesGenerator:
     def create_presentation(self, slides: List[SlideStructure], title: str = "AI Generated Presentation",
                           theme: str = "google_classic", output_path: str = "presentation.html",
                           language: str = "ja") -> Dict[str, Any]:
-        """Enhanced presentation generation with まじん式 patterns"""
+        """Enhanced presentation generation with AI patterns"""
         
         # Convert to enhanced slide structures
         enhanced_slides = self.enhanced_generator.enhance_slide_structure(slides)
@@ -447,7 +447,7 @@ class EnhancedHTMLSlidesGenerator:
     <style>
         {{ theme_css|safe }}
         
-        /* まじん式 Enhanced Patterns Styles */
+        /* AI Enhanced Patterns Styles */
         .google-bold {
             font-weight: 700;
             color: var(--google-primary-blue);
@@ -583,7 +583,7 @@ class EnhancedHTMLSlidesGenerator:
             "slideNumber": "c/t",
             "showSlideNumber": "all",
             
-            # Fragment settings for まじん式 patterns
+            # Fragment settings for AI patterns
             "fragments": True,
             "fragmentInURL": True,
             
@@ -594,7 +594,7 @@ class EnhancedHTMLSlidesGenerator:
                 "RevealHighlight"
             ],
             
-            # まじん式 specific settings
+            # AI pattern specific settings
             "viewDistance": 3,
             "mobileViewDistance": 2,
             "parallaxBackgroundImage": "",

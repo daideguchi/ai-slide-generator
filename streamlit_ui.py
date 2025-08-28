@@ -62,9 +62,9 @@ LANGUAGES = {
         "more_points": "  ... and {} more points",
         "more_slides": "... and {} more slides",
         "generation_mode": "🎨 Generation Mode",
-        "mode_help": "Choose between standard HTML or enhanced まじん式 presentation",
+        "mode_help": "Choose between standard HTML or enhanced AI pattern presentation",
         "standard_mode": "📊 Standard HTML",
-        "enhanced_mode": "✨ Enhanced (まじん式)",
+        "enhanced_mode": "✨ Enhanced (AI Pattern)",
         "google_theme": "🎨 Google Material Theme",
         "google_theme_help": "Select a Google Material Design theme for enhanced presentations",
         "show_validation": "🔍 Show validation results",
@@ -74,9 +74,9 @@ LANGUAGES = {
         "generate_button": "🚀 Generate HTML Presentation",
         "enhanced_button": "✨ Generate Enhanced Presentation",
         "creating": "🎨 Creating presentation...",
-        "creating_enhanced": "✨ Creating enhanced presentation with まじん式 patterns...",
+        "creating_enhanced": "✨ Creating enhanced presentation with AI patterns...",
         "success": "🎉 Presentation generated successfully!",
-        "enhanced_success": "✨ Enhanced presentation with まじん式 patterns created successfully!",
+        "enhanced_success": "✨ Enhanced presentation with AI patterns created successfully!",
         "slides_created": "📊 Slides Created",
         "theme": "🎨 Theme",
         "file_size": "📏 File Size",
@@ -144,9 +144,9 @@ LANGUAGES = {
         "more_points": "  ... 他 {} 個のポイント",
         "more_slides": "... 他 {} 枚のスライド",
         "generation_mode": "🎨 生成モード",
-        "mode_help": "標準HTMLまたはまじん式拡張プレゼンテーションから選択",
+        "mode_help": "標準HTMLまたはAIパターン拡張プレゼンテーションから選択",
         "standard_mode": "📊 標準HTML",
-        "enhanced_mode": "✨ 拡張 (まじん式)",
+        "enhanced_mode": "✨ 拡張 (AIパターン)",
         "google_theme": "🎨 Google Materialテーマ",
         "google_theme_help": "拡張プレゼンテーション用のGoogle Material Designテーマを選択",
         "show_validation": "🔍 検証結果を表示",
@@ -156,9 +156,9 @@ LANGUAGES = {
         "generate_button": "🚀 HTMLプレゼンテーション生成",
         "enhanced_button": "✨ 拡張プレゼンテーション生成",
         "creating": "🎨 プレゼンテーション作成中...",
-        "creating_enhanced": "✨ まじん式パターンで拡張プレゼンテーション作成中...",
+        "creating_enhanced": "✨ AIパターンで拡張プレゼンテーション作成中...",
         "success": "🎉 プレゼンテーション生成成功！",
-        "enhanced_success": "✨ まじん式パターンの拡張プレゼンテーション作成成功！",
+        "enhanced_success": "✨ AIパターンの拡張プレゼンテーション作成成功！",
         "slides_created": "📊 作成スライド数",
         "theme": "🎨 テーマ",
         "file_size": "📏 ファイルサイズ",
@@ -479,7 +479,7 @@ def main():
                             
                             # Show pattern distribution
                             if 'pattern_distribution' in result:
-                                st.subheader("🔍 まじん式 Pattern Distribution")
+                                st.subheader("🔍 AI Pattern Distribution")
                                 pattern_dist = result['pattern_distribution']
                                 for pattern, count in pattern_dist.items():
                                     st.write(f"  • **{pattern}**: {count} slides")
