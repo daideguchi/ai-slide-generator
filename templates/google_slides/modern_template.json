@@ -1,0 +1,35 @@
+{
+    "template_name": "Modern",
+    "template_id": "modern",
+    "description": "Clean and modern presentation template with bold typography",
+    "settings": {
+        "slide_size": "LARGE_16_9",
+        "background_color": {"red": 0.95, "green": 0.95, "blue": 0.95},
+        "title_font": "Roboto",
+        "body_font": "Open Sans",
+        "title_color": {"red": 0.2, "green": 0.4, "blue": 0.8},
+        "body_color": {"red": 0.3, "green": 0.3, "blue": 0.3},
+        "accent_color": {"red": 0.0, "green": 0.8, "blue": 0.4}
+    },
+    "slide_layouts": {
+        "title": {
+            "layout": "TITLE_ONLY",
+            "title_style": {
+                "font_size": 32,
+                "bold": true,
+                "alignment": "CENTER"
+            }
+        },
+        "content": {
+            "layout": "TITLE_AND_BODY", 
+            "title_style": {
+                "font_size": 24,
+                "bold": true
+            },
+            "body_style": {
+                "font_size": 16,
+                "line_spacing": 1.2
+            }
+        }
+    }
+}

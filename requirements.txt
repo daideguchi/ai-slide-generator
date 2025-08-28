@@ -1,0 +1,28 @@
+# Core dependencies
+click==8.1.7
+google-api-python-client==2.109.0
+google-auth==2.23.4
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.1.1
+
+# Text processing
+markdown==3.5.1
+pyyaml==6.0.1
+beautifulsoup4==4.12.2
+
+# HTML template engine
+jinja2==3.1.2
+
+# Utilities
+python-dotenv==1.0.0
+pathlib2==2.3.7
+colorama==0.4.6
+
+# Streamlit UI
+streamlit==1.31.0
+
+# Development and testing
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.11.0
+flake8==6.1.0

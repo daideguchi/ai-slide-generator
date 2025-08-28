@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Slide Generator - まじん式プロンプト設計統合</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .hero .description {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        
+        .feature p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .demo-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .demo-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        
+        .demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn.secondary {
+            background: linear-gradient(135deg, #34a853, #137333);
+            box-shadow: 0 5px 15px rgba(52, 168, 83, 0.4);
+        }
+        
+        .btn.secondary:hover {
+            box-shadow: 0 10px 25px rgba(52, 168, 83, 0.6);
+        }
+        
+        .tech-stack {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tech-stack h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+        
+        .tech-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .tech-item {
+            background: #f8f9fa;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+            color: #555;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-item:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .hero {
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <section class="hero">
+            <h1>🎯 AI Slide Generator</h1>
+            <p class="subtitle">まじん式プロンプト設計統合システム</p>
+            <p class="description">
+                テキストファイルから瞬時にプロフェッショナルなプレゼンテーションを自動生成。<br>
+                Google Material Design + AI パターン解析 + 自動品質検証を統合した次世代スライドジェネレーター
+            </p>
+        </section>
+
+        <section class="features">
+            <div class="feature">
+                <div class="icon">🤖</div>
+                <h3>まじん式AI パターン解析</h3>
+                <p>8つの専門パターン（比較・プロセス・タイムライン・カード等）をAIが自動選択。コンテンツに最適なレイアウトを瞬時に判定。</p>
+            </div>
+            <div class="feature">
+                <div class="icon">🎨</div>
+                <h3>Google Material Design</h3>
+                <p>3つのプロフェッショナルテーマ（Classic・Dark・Minimal）で、Googleレベルのデザイン品質を実現。</p>
+            </div>
+            <div class="feature">
+                <div class="icon">🎤</div>
+                <h3>自動スピーカーノート</h3>
+                <p>スライド内容を解析して発表原稿を自動生成。プレゼンテーション中に'S'キーで表示可能。</p>
+            </div>
+            <div class="feature">
+                <div class="icon">✅</div>
+                <h3>自動品質検証</h3>
+                <p>構造妥当性・文字数・スライド枚数を自動チェック。改善提案とベストプラクティス提示。</p>
+            </div>
+            <div class="feature">
+                <div class="icon">🌍</div>
+                <h3>多言語対応</h3>
+                <p>日本語・英語完全対応。言語に応じたフォント・レイアウト最適化。</p>
+            </div>
+            <div class="feature">
+                <div class="icon">⚡</div>
+                <h3>高速処理</h3>
+                <p>25スライドを2秒以内で生成。MarkdownとPlain Text両対応。</p>
+            </div>
+        </section>
+
+        <section class="demo-section">
+            <h2>🚀 デモ・体験</h2>
+            <p>実際に生成されたプレゼンテーションをご覧ください</p>
+            
+            <div class="demo-buttons">
+                <a href="demo-google-classic.html" class="btn">
+                    🔵 Google Classic デモ
+                </a>
+                <a href="demo-google-dark.html" class="btn">
+                    🔴 Google Dark デモ
+                </a>
+                <a href="demo-google-minimal.html" class="btn">
+                    ⚪ Google Minimal デモ
+                </a>
+                <a href="https://github.com/daideguchi/ai-slide-generator" class="btn secondary">
+                    📁 GitHub Repository
+                </a>
+            </div>
+        </section>
+
+        <section class="tech-stack">
+            <h2>🛠️ Technology Stack</h2>
+            <div class="tech-grid">
+                <span class="tech-item">Python 3.11+</span>
+                <span class="tech-item">Streamlit</span>
+                <span class="tech-item">Reveal.js</span>
+                <span class="tech-item">Jinja2</span>
+                <span class="tech-item">Google Slides API</span>
+                <span class="tech-item">Material Design</span>
+                <span class="tech-item">BeautifulSoup4</span>
+                <span class="tech-item">Markdown</span>
+                <span class="tech-item">Click</span>
+                <span class="tech-item">Colorama</span>
+            </div>
+        </section>
+    </div>
+    
+    <footer class="footer">
+        <p>© 2024 AI Slide Generator - まじん式プロンプト設計統合システム</p>
+    </footer>
+</body>
+</html>
