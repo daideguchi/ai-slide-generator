@@ -62,6 +62,7 @@ logs/
 *.html
 !docs/*.html
 !examples/*.html
+!index.html
 
 # Temporary files
 tmp/
